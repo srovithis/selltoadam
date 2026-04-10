@@ -58,7 +58,7 @@ export async function sendLeadEmail(lead: LeadData): Promise<void> {
   console.log("Sending lead email to Rovithis13@gmail.com...");
   await sgMail.send({
     to: "Rovithis13@gmail.com",
-    from: "Rovithis13@gmail.com",
+    from: "notifications@selltoadam.com",
     subject,
     html,
   });
