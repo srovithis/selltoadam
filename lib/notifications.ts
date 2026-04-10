@@ -49,16 +49,24 @@ export async function sendLeadEmail(lead: LeadData): Promise<void> {
   });
   console.log("Lead email sent successfully.");
 
-  // Send short SMS via Verizon email-to-text gateway
-  const smsBody = `New Lead! Name: ${(lead.name || "Unknown").slice(0, 20)}, Address: ${lead.address.slice(0, 40)}, Ph: ${lead.phone || "N/A"}. CRM: selltoadam.vercel.app/crm`;
-  console.log("Sending SMS via vtext gateway...");
-  await sgMail.send({
-    to: "4132622463@vtext.com",
-    from: "Rovithis13@gmail.com",
-    subject: " ",
-    text: smsBody.slice(0, 160),
-  });
-  console.log("SMS gateway email sent successfully.");
+  // Send short SMS via Verizon email-to-text gateways (SMS + MMS as backup)
+  const smsBody = `New Lead! Name: ${(lead.name || "Unknown").slice(0, 20)}, Phone: ${lead.phone || "N/A"}, Address: ${lead.address.slice(0, 35)}. View: selltoadam.vercel.app/crm`.slice(0, 160);
+  console.log("Sending SMS via vtext + vzwpix gateways...");
+  await Promise.allSettled([
+    sgMail.send({
+      to: "4132622463@vtext.com",
+      from: "Rovithis13@gmail.com",
+      subject: " ",
+      text: smsBody,
+    }),
+    sgMail.send({
+      to: "4132622463@vzwpix.com",
+      from: "Rovithis13@gmail.com",
+      subject: " ",
+      text: smsBody,
+    }),
+  ]);
+  console.log("SMS gateway emails sent.");
 }
 
 // Twilio SMS — kept for future use, currently disabled
