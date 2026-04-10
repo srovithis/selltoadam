@@ -24,8 +24,7 @@ export default function VideoSection() {
             </p>
             <p className="mt-5 text-lg text-gray-700 leading-relaxed">
               Sell Your House Fast for Cash and Close in Days. We buy houses
-              AS-IS! No agents, no fees, no repairs, and it&apos;s completely
-              FREE!{" "}
+              AS-IS! No agents, no fees, no repairs.{" "}
               <Link
                 href="/how-we-buy-houses"
                 className="text-brand-green font-semibold underline hover:text-brand-green-dark"
