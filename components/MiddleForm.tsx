@@ -2,7 +2,7 @@ import LeadForm from "./LeadForm";
 
 export default function MiddleForm() {
   return (
-    <section className="bg-brand-green py-16 md:py-20">
+    <section style={{ backgroundColor: "#0a2540" }} className="py-16 md:py-20">
       <div className="container-narrow grid md:grid-cols-2 gap-10 items-center">
         <div className="text-white">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">

@@ -18,6 +18,20 @@ const traditional = [
   "Deals may fall through 14-21 days in for financing contingency",
 ];
 
+function XIcon() {
+  return (
+    <svg
+      className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.5}
+      viewBox="0 0 24 24"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+    </svg>
+  );
+}
+
 export default function ComparisonTable() {
   return (
     <section className="bg-white py-16 md:py-20">
@@ -27,18 +41,17 @@ export default function ComparisonTable() {
             Sell To Adam Home Selling Solution.
           </h2>
           <p className="mt-4 text-lg text-gray-700">
-            Why have other homeowners like you sold their house to Sell To
-            Adam?
+            Why have other homeowners like you sold their house to Sell To Adam?
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-0 max-w-5xl mx-auto rounded-xl overflow-hidden shadow-xl">
           {/* Sell To Adam */}
-          <div className="bg-brand-green rounded-lg overflow-hidden shadow-lg">
+          <div className="bg-brand-green flex flex-col">
             <div className="bg-brand-green-dark text-white text-center py-5">
               <h3 className="text-2xl font-bold">Sell To Adam</h3>
             </div>
-            <ul className="p-6 space-y-4">
+            <ul className="p-6 space-y-4 flex-1">
               {ours.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-white">
                   <Image
@@ -55,14 +68,14 @@ export default function ComparisonTable() {
           </div>
 
           {/* Traditional */}
-          <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+          <div className="bg-gray-100 flex flex-col">
             <div className="bg-gray-300 text-brand-dark text-center py-5">
               <h3 className="text-2xl font-bold">Traditional Process</h3>
             </div>
-            <ul className="p-6 space-y-4">
+            <ul className="p-6 space-y-4 flex-1">
               {traditional.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-brand-dark">
-                  <span className="text-xl flex-shrink-0">❌</span>
+                  <XIcon />
                   <span>{item}</span>
                 </li>
               ))}

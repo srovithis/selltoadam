@@ -62,6 +62,7 @@ export default function LeadForm({
       onSubmit={handleSubmit}
       className="bg-white rounded-lg shadow-xl p-6 space-y-4"
     >
+      {/* Address — always full width */}
       <input
         type="text"
         name="property_address"
@@ -69,7 +70,9 @@ export default function LeadForm({
         required
         className={inputClass}
       />
-      {variant === "full" && (
+
+      {/* Name — hero and full variants */}
+      {(variant === "hero" || variant === "full") && (
         <input
           type="text"
           name="name"
@@ -78,22 +81,46 @@ export default function LeadForm({
           className={inputClass}
         />
       )}
-      <input
-        type="tel"
-        name="phone"
-        placeholder="Phone Number"
-        required
-        className={inputClass}
-      />
-      {(variant === "middle" || variant === "full") && (
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          required
-          className={inputClass}
-        />
+
+      {/* Phone + Email side-by-side on hero variant */}
+      {variant === "hero" ? (
+        <div className="grid sm:grid-cols-2 gap-4">
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone Number"
+            required
+            className={inputClass}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            required
+            className={inputClass}
+          />
+        </div>
+      ) : (
+        <>
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone Number"
+            required
+            className={inputClass}
+          />
+          {(variant === "middle" || variant === "full") && (
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              required
+              className={inputClass}
+            />
+          )}
+        </>
       )}
+
       {variant === "full" && (
         <textarea
           name="comments"
@@ -102,6 +129,7 @@ export default function LeadForm({
           className={inputClass}
         />
       )}
+
       <button
         type="submit"
         disabled={status === "loading"}
