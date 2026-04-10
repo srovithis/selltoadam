@@ -14,7 +14,7 @@ export default function MediaLogos() {
                 src={`/media${n}.webp`}
                 alt={`TV station logo ${n}`}
                 fill
-                className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                className="object-contain"
               />
             </div>
           ))}
