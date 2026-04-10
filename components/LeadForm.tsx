@@ -80,16 +80,12 @@ function FollowUpModal({
 
         {modal.done ? (
           <div className="p-8 text-center">
-            <div className="text-5xl mb-4">🏠</div>
-            <h2 className="text-2xl font-extrabold text-brand-green">
+            <span className="text-5xl leading-none">🏠</span>
+            <h2 className="mt-4 text-2xl font-extrabold text-brand-green">
               Perfect!
             </h2>
             <p className="mt-2 text-gray-600 text-lg">
-              We&apos;ll be in touch soon 🏠
-            </p>
-            <p className="mt-1 text-sm text-gray-400">
-              Expect a {modal.contactPref.replace(/^📱|^📞/, "").trim().toLowerCase()} during{" "}
-              {modal.bestTime.replace(/^[^\s]+\s/, "").toLowerCase()}.
+              We&apos;ll be in touch soon based on your response preference.
             </p>
           </div>
         ) : (
