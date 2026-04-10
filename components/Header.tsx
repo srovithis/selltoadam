@@ -87,16 +87,17 @@ export default function Header() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="block py-3 hover:text-brand-gold transition-colors"
+                  className="block py-3 font-medium relative group transition-all duration-200 hover:text-brand-gold hover:-translate-y-0.5"
                 >
                   {link.label}
+                  <span className="absolute bottom-2 left-0 h-0.5 w-0 bg-brand-gold transition-all duration-300 group-hover:w-full" />
                 </Link>
               </li>
             ))}
           </ul>
           <Link
             href="/get-a-cash-offer-today"
-            className="bg-brand-gold hover:bg-brand-gold-dark text-brand-dark font-bold px-6 py-3 uppercase text-sm tracking-wide"
+            className="bg-brand-gold hover:bg-brand-gold-dark text-brand-dark font-bold px-6 py-3 uppercase text-sm tracking-wide rounded-lg transition-colors"
           >
             Sell Your House Fast
           </Link>
