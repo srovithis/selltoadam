@@ -45,10 +45,17 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Fire notifications without blocking the response
-    Promise.allSettled([sendLeadEmail(lead), sendLeadSMS(lead)]).catch(
-      (err) => console.error("Notification error:", err)
-    );
+    // Send notifications — must be awaited before response on Vercel serverless
+    try {
+      const results = await Promise.allSettled([sendLeadEmail(lead), sendLeadSMS(lead)]);
+      results.forEach((r, i) => {
+        if (r.status === "rejected") {
+          console.error(`Notification[${i}] failed:`, r.reason);
+        }
+      });
+    } catch (err) {
+      console.error("Notification error:", err);
+    }
 
     return NextResponse.json(lead, { status: 201 });
   } catch (err) {

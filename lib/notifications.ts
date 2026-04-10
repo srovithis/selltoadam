@@ -13,6 +13,7 @@ interface LeadData {
 
 export async function sendLeadEmail(lead: LeadData): Promise<void> {
   const apiKey = process.env.SENDGRID_API_KEY;
+  console.log("SENDGRID_API_KEY exists:", !!apiKey);
   if (!apiKey) {
     console.warn("SENDGRID_API_KEY not set — skipping email");
     return;
@@ -38,22 +39,26 @@ export async function sendLeadEmail(lead: LeadData): Promise<void> {
     <p style="margin-top:16px;"><a href="https://selltoadam.vercel.app/crm">View in CRM →</a></p>
   `;
 
-  // Send full details to Adam's email
+  // Send full details email
+  console.log("Sending lead email to Rovithis13@gmail.com...");
   await sgMail.send({
     to: "Rovithis13@gmail.com",
-    from: "info@selltoadam.com",
+    from: "Rovithis13@gmail.com",
     subject,
     html,
   });
+  console.log("Lead email sent successfully.");
 
-  // Send short SMS via Verizon email-to-text gateway (free, no Twilio needed)
+  // Send short SMS via Verizon email-to-text gateway
   const smsBody = `New Lead! Name: ${(lead.name || "Unknown").slice(0, 20)}, Address: ${lead.address.slice(0, 40)}, Ph: ${lead.phone || "N/A"}. CRM: selltoadam.vercel.app/crm`;
+  console.log("Sending SMS via vtext gateway...");
   await sgMail.send({
     to: "4132622463@vtext.com",
-    from: "info@selltoadam.com",
+    from: "Rovithis13@gmail.com",
     subject: " ",
     text: smsBody.slice(0, 160),
   });
+  console.log("SMS gateway email sent successfully.");
 }
 
 // Twilio SMS — kept for future use, currently disabled
