@@ -11,7 +11,7 @@ export default function MediaLogos() {
           {[1, 2, 3].map((n) => (
             <div key={n} className="relative h-[60px] w-40">
               <Image
-                src={`/media${n}.webp`}
+                src={`/media${n}.png`}
                 alt={`TV station logo ${n}`}
                 fill
                 className="object-contain"
