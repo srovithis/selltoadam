@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Lead {
+  id               String      @id @default(cuid())
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  address          String
+  name             String?
+  phone            String?
+  email            String?
+  soonToSell       String?
+  askingPrice      String?
+  immediateRepairs String?
+  status           String      @default("Lead")
+  notes            String?
+  followUpDate     DateTime?
+  source           String      @default("Website")
+  events           LeadEvent[]
+}
+
+model LeadEvent {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  type      String
+  message   String
+}

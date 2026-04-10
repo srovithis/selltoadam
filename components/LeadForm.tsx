@@ -2,9 +2,7 @@
 
 import { useState, FormEvent } from "react";
 
-const WEB3FORMS_KEY = "761a948d-2cba-415e-bddb-acbc23921868";
-
-type Variant = "hero" | "middle" | "full";
+type Variant = "banner" | "hero" | "middle" | "full";
 
 interface LeadFormProps {
   variant?: Variant;
@@ -22,18 +20,27 @@ export default function LeadForm({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("loading");
-    const formData = new FormData(e.currentTarget);
-    formData.append("access_key", WEB3FORMS_KEY);
-    formData.append("subject", "New Cash Offer Lead - Sell To Adam");
-    formData.append("from_name", "Sell To Adam Website");
+    const fd = new FormData(e.currentTarget);
+
+    const body = {
+      address: fd.get("property_address") as string,
+      name: (fd.get("name") as string) || undefined,
+      phone: (fd.get("phone") as string) || undefined,
+      email: (fd.get("email") as string) || undefined,
+      soonToSell: (fd.get("soon_to_sell") as string) || undefined,
+      askingPrice: (fd.get("asking_price") as string) || undefined,
+      immediateRepairs: (fd.get("immediate_repairs") as string) || undefined,
+      notes: (fd.get("comments") as string) || undefined,
+      source: "Website",
+    };
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/leads", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
-      const data = await res.json();
-      if (data.success) {
+      if (res.ok) {
         setStatus("success");
         (e.target as HTMLFormElement).reset();
       } else {
@@ -56,13 +63,45 @@ export default function LeadForm({
 
   const inputClass =
     "w-full px-4 py-3 rounded-md border border-gray-300 focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/30 text-brand-dark";
+  const selectClass = inputClass + " bg-white";
+
+  // Banner: minimal — address + phone inline
+  if (variant === "banner") {
+    return (
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col sm:flex-row gap-3"
+      >
+        <input
+          type="text"
+          name="property_address"
+          placeholder="Property Address"
+          required
+          className="flex-1 px-4 py-3 rounded-md border border-gray-300 focus:border-brand-green focus:outline-none text-brand-dark"
+        />
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          className="flex-1 px-4 py-3 rounded-md border border-gray-300 focus:border-brand-green focus:outline-none text-brand-dark"
+        />
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="btn-gold whitespace-nowrap disabled:opacity-70"
+        >
+          {status === "loading" ? "Submitting..." : submitLabel}
+        </button>
+      </form>
+    );
+  }
 
   return (
     <form
       onSubmit={handleSubmit}
       className="bg-white rounded-lg shadow-xl p-6 space-y-4"
     >
-      {/* Address — always full width */}
+      {/* Address — always */}
       <input
         type="text"
         name="property_address"
@@ -71,7 +110,7 @@ export default function LeadForm({
         className={inputClass}
       />
 
-      {/* Name — hero and full variants */}
+      {/* Name — hero and full */}
       {(variant === "hero" || variant === "full") && (
         <input
           type="text"
@@ -82,52 +121,53 @@ export default function LeadForm({
         />
       )}
 
-      {/* Phone + Email side-by-side on hero variant */}
+      {/* Phone + Email */}
       {variant === "hero" ? (
         <div className="grid sm:grid-cols-2 gap-4">
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone Number"
-            required
-            className={inputClass}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email Address"
-            required
-            className={inputClass}
-          />
+          <input type="tel" name="phone" placeholder="Phone Number" required className={inputClass} />
+          <input type="email" name="email" placeholder="Email Address" required className={inputClass} />
         </div>
       ) : (
         <>
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone Number"
-            required
-            className={inputClass}
-          />
+          <input type="tel" name="phone" placeholder="Phone Number" required className={inputClass} />
           {(variant === "middle" || variant === "full") && (
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              required
-              className={inputClass}
-            />
+            <input type="email" name="email" placeholder="Email Address" required className={inputClass} />
           )}
         </>
       )}
 
+      {/* Extra fields — full variant only */}
       {variant === "full" && (
-        <textarea
-          name="comments"
-          placeholder="Tell us about your property (optional)"
-          rows={4}
-          className={inputClass}
-        />
+        <>
+          <select name="soon_to_sell" className={selectClass}>
+            <option value="">How soon are you looking to sell?</option>
+            <option>Immediately</option>
+            <option>1–3 months</option>
+            <option>3–6 months</option>
+            <option>6–12 months</option>
+            <option>Just exploring</option>
+          </select>
+          <input
+            type="text"
+            name="asking_price"
+            placeholder="Asking Price (optional)"
+            className={inputClass}
+          />
+          <select name="immediate_repairs" className={selectClass}>
+            <option value="">Immediate Repairs Needed?</option>
+            <option>None</option>
+            <option>Minor</option>
+            <option>Moderate</option>
+            <option>Major</option>
+            <option>Unknown</option>
+          </select>
+          <textarea
+            name="comments"
+            placeholder="Tell us about your property (optional)"
+            rows={4}
+            className={inputClass}
+          />
+        </>
       )}
 
       <button
@@ -137,6 +177,7 @@ export default function LeadForm({
       >
         {status === "loading" ? "Submitting..." : submitLabel}
       </button>
+
       {status === "error" && (
         <p className="text-red-600 text-sm text-center">
           Something went wrong. Please call us at (413) 423-1110.

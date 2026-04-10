@@ -9,6 +9,7 @@ const footerLinks = [
   { href: "/resources", label: "Resources" },
   { href: "/privacy-policy", label: "Privacy Policy" },
   { href: "/blog", label: "Blog" },
+  { href: "/crm", label: "CRM Login" },
 ];
 
 export default function Footer() {
