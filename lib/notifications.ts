@@ -11,6 +11,21 @@ interface LeadData {
   source?: string | null;
 }
 
+async function sendPushNotification(lead: LeadData): Promise<void> {
+  const message = `New Lead: ${lead.name || "Unknown"}\nPhone: ${lead.phone || "N/A"}\nAddress: ${lead.address}\nEmail: ${lead.email || "N/A"}`;
+
+  await fetch("https://ntfy.sh/selltoadam-leads-adam", {
+    method: "POST",
+    headers: {
+      Title: "New Lead - Sell To Adam",
+      Priority: "urgent",
+      Tags: "house,money_with_wings",
+      "Content-Type": "text/plain",
+    },
+    body: message,
+  });
+}
+
 export async function sendLeadEmail(lead: LeadData): Promise<void> {
   const apiKey = process.env.SENDGRID_API_KEY;
   console.log("SENDGRID_API_KEY exists:", !!apiKey);
@@ -49,24 +64,14 @@ export async function sendLeadEmail(lead: LeadData): Promise<void> {
   });
   console.log("Lead email sent successfully.");
 
-  // Send short SMS via Verizon email-to-text gateways (SMS + MMS as backup)
-  const smsBody = `New Lead! Name: ${(lead.name || "Unknown").slice(0, 20)}, Phone: ${lead.phone || "N/A"}, Address: ${lead.address.slice(0, 35)}. View: selltoadam.vercel.app/crm`.slice(0, 160);
-  console.log("Sending SMS via vtext + vzwpix gateways...");
-  await Promise.allSettled([
-    sgMail.send({
-      to: "4132622463@vtext.com",
-      from: "Rovithis13@gmail.com",
-      subject: " ",
-      text: smsBody,
-    }),
-    sgMail.send({
-      to: "4132622463@vzwpix.com",
-      from: "Rovithis13@gmail.com",
-      subject: " ",
-      text: smsBody,
-    }),
-  ]);
-  console.log("SMS gateway emails sent.");
+  // Send Ntfy push notification
+  try {
+    console.log("Sending Ntfy push notification...");
+    await sendPushNotification(lead);
+    console.log("Ntfy push notification sent.");
+  } catch (err) {
+    console.error("Ntfy push notification failed:", err);
+  }
 }
 
 // Twilio SMS — kept for future use, currently disabled
