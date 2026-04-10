@@ -20,7 +20,7 @@ export default function HomePage() {
       <Hero />
       <MediaLogos />
       <VideoSection />
-      <Testimonials />
+      <Testimonials limit={6} />
       <AboutSection />
       <MiddleForm />
       <HowItWorks />
