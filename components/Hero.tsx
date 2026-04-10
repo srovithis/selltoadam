@@ -1,11 +1,17 @@
+import Image from "next/image";
 import LeadForm from "./LeadForm";
 
 export default function Hero() {
   return (
-    <section
-      className="relative bg-gradient-to-br from-brand-green-darker via-brand-green-dark to-brand-green py-16 md:py-24"
-    >
-      <div className="absolute inset-0 bg-black/30" />
+    <section className="relative py-16 md:py-24">
+      <Image
+        src="/hero-bg.webp"
+        alt="Springfield MA neighborhood"
+        fill
+        className="object-cover object-center"
+        priority
+      />
+      <div className="absolute inset-0 bg-black/50" />
       <div className="container-narrow relative grid md:grid-cols-2 gap-10 items-center">
         <div className="text-white">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">

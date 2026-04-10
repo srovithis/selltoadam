@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 const navLinks = [
@@ -16,11 +17,16 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       {/* Top bar */}
       <div className="container-narrow py-4 flex items-center justify-between">
-        <Link href="/" className="flex flex-col">
-          <span className="text-2xl md:text-3xl font-extrabold text-brand-green leading-none">
-            Sell To Adam
-          </span>
-          <span className="text-xs text-gray-600 mt-1 hidden sm:block">
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/logo.webp"
+            alt="Sell To Adam logo"
+            width={160}
+            height={60}
+            className="h-12 w-auto object-contain"
+            priority
+          />
+          <span className="text-xs text-gray-600 hidden sm:block">
             Need To Sell Your House Fast? We Buy Houses!
           </span>
         </Link>

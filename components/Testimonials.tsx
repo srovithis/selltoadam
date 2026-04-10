@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const testimonials = [
   {
     name: "Tina Nascembeni",
@@ -15,13 +17,13 @@ const testimonials = [
 
 function Stars() {
   return (
-    <div className="flex gap-1 text-brand-gold" aria-label="5 star rating">
-      {[...Array(5)].map((_, i) => (
-        <svg key={i} className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-        </svg>
-      ))}
-    </div>
+    <Image
+      src="/stars.png"
+      alt="5 star rating"
+      width={120}
+      height={24}
+      className="h-6 w-auto"
+    />
   );
 }
 
@@ -43,9 +45,13 @@ export default function Testimonials() {
             >
               <div className="flex items-center justify-between mb-3">
                 <h3 className="font-bold text-brand-dark">{t.name}</h3>
-                <span className="text-xs bg-brand-green text-white px-2 py-1 rounded">
-                  Google Reviews
-                </span>
+                <Image
+                  src="/google-reviews.webp"
+                  alt="Google Reviews"
+                  width={80}
+                  height={32}
+                  className="h-8 w-auto object-contain"
+                />
               </div>
               <p className="text-gray-700 text-sm leading-relaxed flex-1">
                 {t.text}

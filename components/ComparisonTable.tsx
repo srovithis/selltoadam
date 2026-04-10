@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const ours = [
   "Zero Fees to Sell Your House",
   "Highest Off-Market Price",
@@ -39,7 +41,13 @@ export default function ComparisonTable() {
             <ul className="p-6 space-y-4">
               {ours.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-white">
-                  <span className="text-xl flex-shrink-0">✅</span>
+                  <Image
+                    src="/check-icon.png"
+                    alt="check"
+                    width={24}
+                    height={24}
+                    className="flex-shrink-0 mt-0.5"
+                  />
                   <span className="font-medium">{item}</span>
                 </li>
               ))}

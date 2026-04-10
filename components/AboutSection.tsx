@@ -1,12 +1,18 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function AboutSection() {
   return (
     <section className="bg-white py-16 md:py-20">
       <div className="container-narrow grid md:grid-cols-2 gap-10 items-center">
         <div className="order-2 md:order-1">
-          <div className="w-full aspect-[2/3] max-w-sm mx-auto bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg flex items-center justify-center text-gray-500 font-semibold">
-            Adam Rovithis Photo
+          <div className="relative w-full aspect-[2/3] max-w-sm mx-auto rounded-lg overflow-hidden">
+            <Image
+              src="/adam-photo.webp"
+              alt="Adam Rovithis, owner of Sell To Adam"
+              fill
+              className="object-cover object-top"
+            />
           </div>
         </div>
         <div className="order-1 md:order-2">

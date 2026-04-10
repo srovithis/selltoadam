@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const benefits = [
   {
     icon: "💵",
@@ -36,8 +38,13 @@ export default function WhyUs() {
     <section className="bg-brand-gray py-16 md:py-20">
       <div className="container-narrow grid lg:grid-cols-2 gap-12 items-center">
         <div>
-          <div className="w-full aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg flex items-center justify-center text-gray-500 font-semibold">
-            Springfield, MA Neighborhood Photo
+          <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden">
+            <Image
+              src="/neighborhood.webp"
+              alt="Springfield, MA neighborhood"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
         <div>

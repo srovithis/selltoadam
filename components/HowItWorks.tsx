@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const steps = [
   {
     num: 1,
@@ -44,8 +46,13 @@ export default function HowItWorks() {
               key={step.num}
               className="bg-white rounded-lg p-8 shadow-md text-center"
             >
-              <div className="mx-auto w-16 h-16 rounded-full bg-brand-green text-white flex items-center justify-center text-2xl font-bold mb-4">
-                {step.num}
+              <div className="mx-auto w-16 h-16 mb-4 relative">
+                <Image
+                  src={`/icon-step${step.num}.webp`}
+                  alt={`Step ${step.num}`}
+                  fill
+                  className="object-contain"
+                />
               </div>
               <p className="text-brand-green uppercase text-xs tracking-widest font-bold">
                 Step {step.num}

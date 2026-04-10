@@ -1,9 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function FinalCTA() {
   return (
-    <section className="bg-brand-green py-16 md:py-20">
-      <div className="container-narrow text-center text-white">
+    <section className="relative py-16 md:py-20">
+      <Image
+        src="/city-bg.webp"
+        alt="City background"
+        fill
+        className="object-cover object-center"
+      />
+      <div className="absolute inset-0 bg-brand-green/90" />
+      <div className="relative container-narrow text-center text-white">
         <h2 className="text-3xl md:text-5xl font-bold">
           Ready to Sell Your MA &amp; CT Home?
         </h2>
