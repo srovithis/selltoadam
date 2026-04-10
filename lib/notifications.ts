@@ -35,35 +35,38 @@ export async function sendLeadEmail(lead: LeadData): Promise<void> {
       <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Notes</td><td style="padding:8px;border:1px solid #ddd;">${lead.notes || "—"}</td></tr>
       <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Source</td><td style="padding:8px;border:1px solid #ddd;">${lead.source || "Website"}</td></tr>
     </table>
-    <p style="margin-top:16px;"><a href="https://selltoadam.com/crm">View in CRM →</a></p>
+    <p style="margin-top:16px;"><a href="https://selltoadam.vercel.app/crm">View in CRM →</a></p>
   `;
 
+  // Send full details to Adam's email
   await sgMail.send({
     to: "Rovithis13@gmail.com",
     from: "info@selltoadam.com",
     subject,
     html,
   });
+
+  // Send short SMS via Verizon email-to-text gateway (free, no Twilio needed)
+  const smsBody = `New Lead! Name: ${(lead.name || "Unknown").slice(0, 20)}, Address: ${lead.address.slice(0, 40)}, Ph: ${lead.phone || "N/A"}. CRM: selltoadam.vercel.app/crm`;
+  await sgMail.send({
+    to: "4132622463@vtext.com",
+    from: "info@selltoadam.com",
+    subject: " ",
+    text: smsBody.slice(0, 160),
+  });
 }
 
-export async function sendLeadSMS(lead: LeadData): Promise<void> {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const fromNumber = process.env.TWILIO_PHONE_NUMBER;
-
-  if (!accountSid || !authToken || !fromNumber) {
-    console.warn("Twilio env vars not set — skipping SMS");
-    return;
-  }
-
-  const twilio = (await import("twilio")).default;
-  const client = twilio(accountSid, authToken);
-
-  const body = `New Lead from selltoadam.com! Name: ${lead.name || "Unknown"}, Address: ${lead.address}, Phone: ${lead.phone || "N/A"}. Login to CRM to view.`;
-
-  await client.messages.create({
-    body,
-    from: fromNumber,
-    to: "+14132622463",
-  });
+// Twilio SMS — kept for future use, currently disabled
+export async function sendLeadSMS(_lead: LeadData): Promise<void> {
+  // const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  // const authToken = process.env.TWILIO_AUTH_TOKEN;
+  // const fromNumber = process.env.TWILIO_PHONE_NUMBER;
+  // if (!accountSid || !authToken || !fromNumber) return;
+  // const twilio = (await import("twilio")).default;
+  // const client = twilio(accountSid, authToken);
+  // await client.messages.create({
+  //   body: `New Lead! Name: ${_lead.name || "Unknown"}, Address: ${_lead.address}, Phone: ${_lead.phone || "N/A"}. CRM: selltoadam.vercel.app/crm`,
+  //   from: fromNumber,
+  //   to: "+14132622463",
+  // });
 }
