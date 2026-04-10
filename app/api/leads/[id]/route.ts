@@ -20,7 +20,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const body = await req.json();
-    const { status, notes, followUpDate } = body;
+    const { status, notes, followUpDate, contactPreference, bestTime } = body;
 
     const existing = await prisma.lead.findUnique({ where: { id: params.id } });
     if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -50,6 +50,8 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
         ...(followUpDate !== undefined && {
           followUpDate: followUpDate ? new Date(followUpDate) : null,
         }),
+        ...(contactPreference !== undefined && { contactPreference }),
+        ...(bestTime !== undefined && { bestTime }),
         ...(events.length > 0 && {
           events: { create: events },
         }),

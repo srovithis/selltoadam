@@ -20,9 +20,11 @@ model Lead {
   immediateRepairs String?
   status           String      @default("Lead")
   notes            String?
-  followUpDate     DateTime?
-  source           String      @default("Website")
-  events           LeadEvent[]
+  followUpDate        DateTime?
+  source              String      @default("Website")
+  contactPreference   String?
+  bestTime            String?
+  events              LeadEvent[]
 }
 
 model LeadEvent {
