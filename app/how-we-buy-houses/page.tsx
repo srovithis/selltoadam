@@ -248,14 +248,20 @@ export default function HowPage() {
             {questions.map((item, i) => (
               <div
                 key={i}
-                className="flex gap-6 bg-brand-gray rounded-xl overflow-hidden shadow-sm"
+                className="flex gap-6 bg-white rounded-xl overflow-hidden shadow-sm border-l-4"
+                style={{ borderLeftColor: "#2d6a2d" }}
               >
-                <div className="flex-shrink-0 w-20 bg-brand-green flex items-center justify-center">
-                  <span className="text-5xl font-extrabold text-white/20 select-none">{i + 1}</span>
+                <div className="flex-shrink-0 w-24 flex items-center justify-center py-6 pl-4">
+                  <span
+                    className="text-7xl font-extrabold leading-none select-none"
+                    style={{ color: "#f5a623" }}
+                  >
+                    {i + 1}
+                  </span>
                 </div>
                 <div className="py-6 pr-6">
                   <h3 className="font-bold text-brand-dark text-lg">{item.q}</h3>
-                  <p className="mt-2 text-gray-700 leading-relaxed">{item.a}</p>
+                  <p className="mt-2 text-gray-500 leading-relaxed">{item.a}</p>
                 </div>
               </div>
             ))}
