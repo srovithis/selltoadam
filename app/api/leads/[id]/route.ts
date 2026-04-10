@@ -25,20 +25,20 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     const existing = await prisma.lead.findUnique({ where: { id: params.id } });
     if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-    const events: { type: string; message: string }[] = [];
+    const events: { type: string; note: string }[] = [];
     if (status && status !== existing.status) {
       events.push({
         type: "status_change",
-        message: `Status changed from "${existing.status}" to "${status}"`,
+        note: `Status changed from "${existing.status}" to "${status}"`,
       });
     }
     if (notes !== undefined && notes !== existing.notes) {
-      events.push({ type: "note_added", message: "Notes updated" });
+      events.push({ type: "note_added", note: "Notes updated" });
     }
     if (followUpDate !== undefined) {
       events.push({
         type: "followup_set",
-        message: `Follow-up date set to ${followUpDate ? new Date(followUpDate).toLocaleDateString() : "cleared"}`,
+        note: `Follow-up date set to ${followUpDate ? new Date(followUpDate).toLocaleDateString() : "cleared"}`,
       });
     }
 

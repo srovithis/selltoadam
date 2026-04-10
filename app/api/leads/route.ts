@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
         events: {
           create: {
             type: "created",
-            message: "Lead created from website form",
+            note: "Lead created from website form",
           },
         },
       },

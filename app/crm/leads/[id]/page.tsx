@@ -8,7 +8,7 @@ interface LeadEvent {
   id: string;
   createdAt: string;
   type: string;
-  message: string;
+  note: string | null;
 }
 
 interface Lead {
@@ -274,7 +274,7 @@ export default function LeadDetailPage() {
                         {EVENT_ICONS[ev.type] ?? "•"}
                       </span>
                       <div>
-                        <p className="text-sm text-gray-800">{ev.message}</p>
+                        <p className="text-sm text-gray-800">{ev.note}</p>
                         <p className="text-xs text-gray-400 mt-0.5">
                           {new Date(ev.createdAt).toLocaleString()}
                         </p>

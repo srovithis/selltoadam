@@ -1,10 +1,10 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = []
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Lead {
@@ -31,5 +31,5 @@ model LeadEvent {
   leadId    String
   lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
   type      String
-  message   String
+  note      String?
 }
