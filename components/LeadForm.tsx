@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import AddressAutocomplete from "./AddressAutocomplete";
 
 type Variant = "banner" | "hero" | "middle" | "full";
 
@@ -72,10 +73,7 @@ export default function LeadForm({
         onSubmit={handleSubmit}
         className="flex flex-col sm:flex-row gap-3"
       >
-        <input
-          type="text"
-          name="property_address"
-          placeholder="Property Address"
+        <AddressAutocomplete
           required
           className="flex-1 px-4 py-3 rounded-md border border-gray-300 focus:border-brand-green focus:outline-none text-brand-dark"
         />
@@ -102,13 +100,7 @@ export default function LeadForm({
       className="bg-white rounded-lg shadow-xl p-6 space-y-4"
     >
       {/* Address — always */}
-      <input
-        type="text"
-        name="property_address"
-        placeholder="Property Address"
-        required
-        className={inputClass}
-      />
+      <AddressAutocomplete required className={inputClass} />
 
       {/* Name — hero and full */}
       {(variant === "hero" || variant === "full") && (
