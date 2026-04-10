@@ -65,6 +65,16 @@ const values = [
       </svg>
     ),
   },
+  {
+    title: "LOCAL & COMMITTED",
+    desc: "We live and work in MA & CT. This is our community and we treat every homeowner like a neighbor.",
+    icon: (
+      <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+      </svg>
+    ),
+  },
 ];
 
 export default function OurCompanyPage() {
@@ -204,7 +214,7 @@ export default function OurCompanyPage() {
       {/* 5 — Our Values */}
       <section className="bg-white py-16 md:py-20">
         <div className="container-narrow">
-          <h2 className="section-heading text-center">Our Values</h2>
+          <h2 className="section-heading text-center">Our Core Values</h2>
           <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {values.map((v) => (
               <div
