@@ -35,3 +35,30 @@ model LeadEvent {
   type      String
   note      String?
 }
+
+// ─── STASA AI Chat Widget ───────────────────────────────────────────────────
+// Persistent visitor chat sessions for the public site chat widget, plus a
+// live human-handoff path (assistant ⇄ staff "Adam").
+
+model StasaVisitor {
+  id                 String         @id @default(cuid())
+  visitorId          String         @unique
+  visitorName        String?
+  visitorContact     String?
+  handoffRequested   Boolean        @default(false)
+  handoffRequestedAt DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  messages           StasaMessage[]
+}
+
+model StasaMessage {
+  id        String       @id @default(cuid())
+  visitorId String
+  visitor   StasaVisitor @relation(fields: [visitorId], references: [visitorId], onDelete: Cascade)
+  role      String       // "user" | "assistant" | "staff"
+  content   String
+  createdAt DateTime     @default(now())
+
+  @@index([visitorId, createdAt])
+}

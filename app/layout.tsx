@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import STASAChatWidget from "@/components/STASAChatWidget";
 
 export const metadata: Metadata = {
   title: "Sell To Adam | We Buy Houses In MA & CT | Cash Home Buyer",
@@ -14,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <STASAChatWidget />
+      </body>
     </html>
   );
 }
